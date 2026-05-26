@@ -32,24 +32,22 @@ jobs:
         run: |
           mkdir -p .github/workflow-reports
 
-      - name: Install Java and Saxon-HE
+      - name: Install Java and SchXslt
         run: |
           echo "Installing Java..."
           sudo apt-get update
           sudo apt-get install -y default-jre-headless
           
-          echo "Downloading Saxon-HE..."
-          # Using the 12.9 version as requested
-          wget -q https://github.com/Saxonica/Saxon-HE/releases/download/SaxonHE12-9/SaxonHE12-9J.zip
-          unzip -q SaxonHE12-9J.zip
+          echo "Downloading SchXslt..."
+          wget -q https://codeberg.org/SchXslt/schxslt/releases/download/v1.10.1/schxslt-cli.jar
  
           # Verify the jar exists
-          if [ ! -f "saxon-he-12.9.jar" ]; then
-            echo "Error: Saxon JAR not found after unzip."
+          if [ ! -f "schxslt-cli.jar" ]; then
+            echo "Error: SchXslt JAR not found after unzip."
             exit 1
           fi
           
-          echo "SAXON_JAR=$(pwd)/saxon-he-12.9.jar" >> $GITHUB_ENV
+          echo "SCHXSLT_JAR=$(pwd)/schxslt-cli.jar" >> $GITHUB_ENV
           echo "Java Version:"
           java -version
 
@@ -90,25 +88,13 @@ jobs:
             
             echo "Validating: $file" >> "$REPORT"
             
-            # Run Saxon-HE
-            # -s: Source XML file
-            # -schematron: The Schematron schema file
-            # 2>&1: Capture both stdout and stderr
-
-
             # Verify the schematron file exists
             if [ ! -f "$SCHEMATRON_FILE" ]; then
               echo "Error: Schematron file not found."
               exit 1
             fi
 
-            echo "file: $file"
-            echo "schematron: $SCHEMATRON_FILE"
-            echo "java -jar "$SAXON_JAR" -s="$file" -schematron="$SCHEMATRON_FILE" 2>&1"
-            echo "$(ls -la /home/runner/work/EditionExample/EditionExample/saxon-he-12.9.jar)"
-
-            output=$(java -jar "$SAXON_JAR" -s="$file" -schematron="$SCHEMATRON_FILE" 2>&1)
-            echo "$output"
+            output=$(java -jar "$SCHXSLT_JAR" -d "$file" -s "$SCHEMATRON_FILE" 2>&1)
             exit_code=$?
             set -e
             
