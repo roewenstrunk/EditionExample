@@ -112,7 +112,7 @@ jobs:
               FAILED_FILES=$((FAILED_FILES + 1))
             fi
           done < xml_files.txt
-          
+          echo "Dublin Core validation completed." >> "$REPORT"
           cat "$REPORT"
 
       - name: Upload Validation Report as Artifact
@@ -126,7 +126,7 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add .github/workflow-reports/mei-dc-validation_report.md
+          git add .github/workflow-reports/mei-dublin-core-validation.md
           git commit -m "Update Dublin Core validation report" || echo "No changes to commit"
           git push
           # Note: The 'git push' step will fail in Pull Request workflows unless you use a specific token
