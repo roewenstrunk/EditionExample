@@ -60,11 +60,14 @@ jobs:
           REPORT_FILE: ".github/workflow-reports/mei-dublin-core-validation.md"
         run: |
 
-          find . -type f -name "*.xml" \
-            ! -path "./.github/*" \
-            ! -path "./vendor/*" \
-            ! -path "./.git/*" \
-            ! -name "*.xml.bak" \
+          #find . -type f -name "*.xml" \
+          #  ! -path "./.github/*" \
+          #  ! -path "./vendor/*" \
+          #  ! -path "./.git/*" \
+          #  ! -name "*.xml.bak" \
+          #  > xml_files.txt
+
+          grep -r "http://www.music-encoding.org/ns/mei" . \
             > xml_files.txt
 
           REPORT="$REPORT_FILE"
