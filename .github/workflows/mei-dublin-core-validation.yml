@@ -67,7 +67,7 @@ jobs:
           #  ! -name "*.xml.bak" \
           #  > xml_files.txt
 
-          grep -r "http://www.music-encoding.org/ns/mei" . \
+          grep -r -l "http://www.music-encoding.org/ns/mei" . \
             > xml_files.txt
 
           REPORT="$REPORT_FILE"
