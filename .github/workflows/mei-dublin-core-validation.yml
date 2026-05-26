@@ -101,7 +101,10 @@ jobs:
               echo "Error: Schematron file not found."
               exit 1
             fi
-      
+
+            echo "file: $file"
+            echo "schematron: $SCHEMATRON_FILE"
+            echo "java -jar "$SAXON_JAR" -s="$file" -schematron="$SCHEMATRON_FILE" 2>&1"
 
             output=$(java -jar "$SAXON_JAR" -s="$file" -schematron="$SCHEMATRON_FILE" 2>&1)
             exit_code=$?
