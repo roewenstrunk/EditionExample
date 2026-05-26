@@ -105,8 +105,10 @@ jobs:
             echo "file: $file"
             echo "schematron: $SCHEMATRON_FILE"
             echo "java -jar "$SAXON_JAR" -s="$file" -schematron="$SCHEMATRON_FILE" 2>&1"
+            echo "$(ls -la /home/runner/work/EditionExample/EditionExample/saxon-he-12.9.jar)"
 
             output=$(java -jar "$SAXON_JAR" -s="$file" -schematron="$SCHEMATRON_FILE" 2>&1)
+            echo "$output"
             exit_code=$?
             set -e
             
