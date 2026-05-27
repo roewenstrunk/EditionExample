@@ -137,11 +137,10 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git fetch
-          git pull
           git add .github/workflow-reports/mei-dublin-core-validation.md
           git add .github/workflow-reports/validation/*.xml
           git commit -m "Update Dublin Core validation report" || echo "No changes to commit"
+          git pull --rebase
           git push
           # Note: The 'git push' step will fail in Pull Request workflows unless you use a specific token
        
