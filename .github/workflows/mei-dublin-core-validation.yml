@@ -31,7 +31,7 @@ jobs:
       - name: Create necessary directories
         run: |
           mkdir -p .github/workflow-reports/validation
-          echo "OUTPUT_DIR=$(pwd)/github/workflow-reports/validation" >> $GITHUB_ENV
+          echo "OUTPUT_DIR=.github/workflow-reports/validation" >> $GITHUB_ENV
 
       - name: Install Java and SchXslt
         run: |
