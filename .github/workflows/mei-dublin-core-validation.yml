@@ -87,7 +87,7 @@ jobs:
             TOTAL_FILES=$((TOTAL_FILES + 1))
             echo "Processing file $TOTAL_FILES/$TOTAL_FILES: $file"
             
-            echo "Validating: $file" >> "$REPORT"
+            echo "Validating: $file <br>" >> "$REPORT"
             
             # Verify the schematron file exists
             if [ ! -f "$SCHEMATRON_FILE" ]; then
@@ -105,13 +105,18 @@ jobs:
             
             if [ $exit_code -eq 0 ]; then
               echo "  ✅ Status: PASSED" >> "$REPORT"
-              echo "Output file: $output_file" >> "$REPORT"
+              if grep -q "WARNING" "$output_file"; then
+                echo " (with warnings) <br>"
+              else
+                echo " <br>"
+              fi
+              echo "Output file: $output_file <br>" >> "$REPORT"
               echo "" >> "$REPORT"
               PASSED_FILES=$((PASSED_FILES + 1))
             else
               ALL_SUCCESS=false
-              echo "  ❌ Status: FAILED" >> "$REPORT"
-              echo "  --- Error Messages ---" >> "$REPORT"
+              echo "  ❌ Status: FAILED <br>" >> "$REPORT"
+              echo "  --- Error Messages --- <br>" >> "$REPORT"
               # Print the error output
               echo "$output" >> "$REPORT"
               echo "" >> "$REPORT"
