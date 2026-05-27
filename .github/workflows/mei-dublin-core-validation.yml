@@ -59,13 +59,6 @@ jobs:
           REPORT_FILE: ".github/workflow-reports/mei-dublin-core-validation.md"
         run: |
 
-          #find . -type f -name "*.xml" \
-          #  ! -path "./.github/*" \
-          #  ! -path "./vendor/*" \
-          #  ! -path "./.git/*" \
-          #  ! -name "*.xml.bak" \
-          #  > xml_files.txt
-
           grep -r -l -H --include \*.xml --exclude-dir=.github "http://www.music-encoding.org/ns/mei" . \
             > xml_files.txt
 
@@ -96,8 +89,6 @@ jobs:
             fi
 
             output_file="$OUTPUT_DIR/$(basename "$file" .xml)-validation.xml"
-            
-            echo "java -jar $SCHXSLT_JAR -d $file -s $SCHEMATRON_FILE -o $output_file"
             
             output=$(java -jar "$SCHXSLT_JAR" -d "$file" -s "$SCHEMATRON_FILE" -o "$output_file" 2>&1) 
             exit_code=$?
