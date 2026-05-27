@@ -97,7 +97,7 @@ jobs:
 
             output_file="$OUTPUT_DIR/$(basename "$file" .xml)-validation.xml"
             
-            echo 'java -jar "$SCHXSLT_JAR" -d "$file" -s "$SCHEMATRON_FILE" -o "$output_file"'
+            echo "java -jar $SCHXSLT_JAR -d $file -s $SCHEMATRON_FILE -o $output_file"
             
             output=$(java -jar "$SCHXSLT_JAR" -d "$file" -s "$SCHEMATRON_FILE" -o "$output_file" 2>&1) 
             exit_code=$?
