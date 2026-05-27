@@ -1,7 +1,7 @@
 ### Dublin Core Extraction Report
 
 Branch: ftr/metadata-validation-and-generation
-Generated: Wed May 27 04:30:52 UTC 2026
+Generated: Wed May 27 13:39:27 UTC 2026
 
 Found 5 XML files to process.
 
