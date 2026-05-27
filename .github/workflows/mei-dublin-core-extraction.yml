@@ -75,13 +75,16 @@ jobs:
           echo "" >> "$REPORT"
 
           while IFS= read -r file; do
+            
+            echo "Processing: $file <br>" >> "$REPORT"
+            
             java -jar "$SAXON_JAR" -o:"$OUTPUT_DIR/$(basename "$file" .xml)-dc.xml" -s:"$file" -xsl:"$(pwd)/mei-metadata-toolkit/src/xsl/mei2dc.xsl"
             output_file="$OUTPUT_DIR/$(basename "$file" .xml)-dc.xml"
             if [ -f "$output_file" ]; then
               if grep -q "<oai_dc:dc" "$output_file"; then
-                echo "Dublin Core metadata extracted successfully to $output_file" >> "$REPORT"
+                echo "  ✅ Dublin Core metadata extracted successfully to $output_file" >> "$REPORT"
               else
-                echo "No Dublin Core metadata found in $file." >> "$REPORT"
+                echo "  ❌ No Dublin Core metadata found in $file" >> "$REPORT"
                 rm "$output_file"
               fi
             else
