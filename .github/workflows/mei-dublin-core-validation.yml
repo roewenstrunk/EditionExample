@@ -95,7 +95,7 @@ jobs:
               exit 1
             fi
 
-            output_file=$OUTPUT_DIR/$(basename "$file" .xml)-validation.xml"
+            output_file="$OUTPUT_DIR/$(basename "$file" .xml)-validation.xml"
             
             output=$(java -jar "$SCHXSLT_JAR" -d "$file" -s "$SCHEMATRON_FILE" -o "$output_file" 2>&1) 
             exit_code=$?
