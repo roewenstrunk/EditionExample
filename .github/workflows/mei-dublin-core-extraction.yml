@@ -104,6 +104,8 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
+          git fetch
+          git pull
           git add .github/workflow-reports/mei-dublin-core-extraction.md
           git add metadata/dc/*.xml
           git commit -m "Update Dublin Core extraction report" || echo "No changes to commit"
