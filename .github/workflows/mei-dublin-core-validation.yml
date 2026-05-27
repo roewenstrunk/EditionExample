@@ -30,7 +30,8 @@ jobs:
 
       - name: Create necessary directories
         run: |
-          mkdir -p .github/workflow-reports
+          mkdir -p .github/workflow-reports/validation
+          echo "OUTPUT_DIR=$(pwd)/github/workflow-reports/validation" >> $GITHUB_ENV
 
       - name: Install Java and SchXslt
         run: |
@@ -94,12 +95,15 @@ jobs:
               exit 1
             fi
 
-            output=$(java -jar "$SCHXSLT_JAR" -d "$file" -s "$SCHEMATRON_FILE" 2>&1)
+            output_file=$OUTPUT_DIR/$(basename "$file" .xml)-validation.xml"
+            
+            output=$(java -jar "$SCHXSLT_JAR" -d "$file" -s "$SCHEMATRON_FILE" -o "$output_file" 2>&1) 
             exit_code=$?
             set -e
             
             if [ $exit_code -eq 0 ]; then
               echo "  ✅ Status: PASSED" >> "$REPORT"
+              echo "Output file: $output_file" >> "$REPORT"
               echo "" >> "$REPORT"
               PASSED_FILES=$((PASSED_FILES + 1))
             else
@@ -112,7 +116,7 @@ jobs:
               FAILED_FILES=$((FAILED_FILES + 1))
             fi
           done < xml_files.txt
-          echo "Dublin Core validation completed." >> "$REPORT"
+          echo "Dublin Core validation completed. Validation report files are located in $OUTPUT_DIR." >> "$REPORT"
           cat "$REPORT"
 
       - name: Upload Validation Report as Artifact
