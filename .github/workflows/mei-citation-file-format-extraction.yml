@@ -1,5 +1,7 @@
 name: Extraction of Citation File Format Metadata from MEI Files
 
+# Template for using MEI to CFF (see working example in https://github.com/Edirom/EditionExample)
+
 on:
   push:
     branches: 
