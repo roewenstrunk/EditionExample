@@ -1,0 +1,7 @@
+*.xpr
+build/
+
+*.DS_Store
+.existdb.json
+dist/*
+.idea/
