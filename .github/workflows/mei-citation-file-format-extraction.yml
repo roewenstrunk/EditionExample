@@ -79,7 +79,7 @@ jobs:
           input_file=""
           while IFS= read -r file; do
             input_files="$input_files,../../../$file"
-            input_file="../../../$file"
+            input_file="$file"
           done < xml_files.txt
           echo "INPUT_FILES=$input_files" >> $GITHUB_ENV
 
