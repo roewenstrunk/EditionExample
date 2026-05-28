@@ -83,6 +83,8 @@ jobs:
           done < xml_files.txt
           echo "INPUT_FILES=$input_files" >> $GITHUB_ENV
 
+          echo "$input_files"
+
           # run XSLT transformation to extract CFF metadata and provide input files as parameter
           java -jar "$SAXON_JAR" -o:"$OUTPUT_DIR/CITATION.cff" -s:"$input_file" -xsl:"mei-metadata-toolkit/src/xsl/mei2cff.xsl" input-files="'$input_files'"
           
